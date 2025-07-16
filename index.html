@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>응급처치 정보 & 랜덤 퀴즈</title>
+  <style>
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #2e86c1;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .question {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .question button {
+      display: block;
+      margin: 8px 0;
+      padding: 6px 12px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .question button.correct {
+      background-color: green !important;
+    }
+    .question button.incorrect {
+      background-color: red !important;
+    }
+    .question button.disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .result {
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .explanation {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+    h2 {
+      color: #21618c;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>응급처치 정보 & 랜덤 퀴즈</h1>
+  <p>응급상황에서 소중한 생명을 지킬 수 있는 방법을 배우고 테스트해보세요</p>
+</header>
+
+<section>
+  <h2>📚 응급처치 정보</h2>
+
+  <div class="card">
+    <h3>🫀 심폐소생술(CPR)</h3>
+    <p>
+      - 반응 확인 후 119에 신고<br>
+      - 가슴 중앙을 5~6cm 깊이로, 분당 100~120회 압박<br>
+      - 30회 압박 + 2회 인공호흡 반복<br>
+      - 자동제세동기(AED)가 있다면 음성 안내에 따라 사용
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🔥 화상 응급처치</h3>
+    <p>
+      - 화상의 원인을 제거하고 찬물로 10~15분 식힘<br>
+      - 물집은 터뜨리지 말고 깨끗한 천으로 덮음<br>
+      - 연고나 기름은 바르지 않고 병원으로 이송
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🦴 골절 응급처치</h3>
+    <p>
+      - 부러진 부위는 움직이지 않도록 고정<br>
+      - 부목을 이용해 관절 위아래 고정<br>
+      - 출혈이 있다면 깨끗한 천으로 압박<br>
+      - 가능한 빨리 병원 이송
+    </p>
+  </div>
+</section>
+
+<section id="quiz-section">
+  <h2>📝 랜덤 응급처치 퀴즈</h2>
+  <div id="quiz-container"></div>
+</section>
+
+<footer>
+  ⓒ 2025 응급처치 안내 웹사이트 | 만든 사람: 김예은
+</footer>
+
+<script>
+  const questions = [
+    {
+      question: "심폐소생술(CPR)의 가슴 압박 속도는?",
+      options: [
+        { text: "60~80회/분", correct: false, explanation: "심폐소생술은 분당 100~120회 속도로 압박해야 합니다." },
+        { text: "90~100회/분", correct: false, explanation: "조금 부족해요! 100~120회가 적절합니다." },
+        { text: "100~120회/분", correct: true, explanation: "정확해요! 100~120회/분이 가장 효과적입니다." }
+      ]
+    },
+    {
+      question: "화상을 입었을 때 가장 먼저 해야 할 행동은?",
+      options: [
+        { text: "물집 터뜨리기", correct: false, explanation: "감염 위험이 커지므로 터뜨리면 안 됩니다." },
+        { text: "바셀린 바르기", correct: false, explanation: "연고보단 먼저 찬물로 식혀야 해요." },
+        { text: "화상의 원인 제거 및 찬물로 식힘", correct: true, explanation: "가장 우선적인 응급처치입니다!" }
+      ]
+    },
+    {
+      question: "골절 응급처치에서 올바른 방법은?",
+      options: [
+        { text: "계속 주무르기", correct: false, explanation: "오히려 손상을 키울 수 있어요." },
+        { text: "움직이지 않게 고정하고 병원 이송", correct: true, explanation: "가장 안전하고 효과적인 방법입니다." },
+        { text: "움직여서 통증 확인하기", correct: false, explanation: "통증 유발보다 고정이 우선입니다." }
+      ]
+    },
+    {
+      question: "자동제세동기(AED)를 사용할 때 올바른 설명은?",
+      options: [
+        { text: "젖은 피부에도 바로 부착한다", correct: false, explanation: "젖은 피부는 닦은 후 부착해야 해요." },
+        { text: "음성 안내에 따라 패드 부착 및 전기 충격", correct: true, explanation: "AED는 음성 안내에 따라 사용합니다." },
+        { text: "임의로 충격 버튼 계속 누르기", correct: false, explanation: "AED는 스스로 분석 후 충격을 결정합니다." }
+      ]
+    },
+    {
+      question: "응급처치 시 출혈 부위 지혈 방법은?",
+      options: [
+        { text: "상처를 흐르는 물로 씻는다", correct: false, explanation: "깨끗이 씻는 것보다 압박이 먼저예요." },
+        { text: "깨끗한 천으로 압박 지혈", correct: true, explanation: "정답! 출혈 시 가장 기본적인 응급처치입니다." },
+        { text: "출혈 부위를 심장보다 낮게 한다", correct: false, explanation: "높게 해야 출혈이 줄어요." }
+      ]
+    }
+  ];
+
+  function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  function generateQuiz() {
+    const quizContainer = document.getElementById("quiz-container");
+    const selectedQuestions = shuffle(questions).slice(0, 3);
+
+    selectedQuestions.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question";
+
+      const qText = document.createElement("p");
+      qText.innerHTML = `<strong>${index + 1}. ${q.question}</strong>`;
+      questionDiv.appendChild(qText);
+
+      const resultDiv = document.createElement("div");
+      resultDiv.className = "result";
+      const explanationDiv = document.createElement("div");
+      explanationDiv.className = "explanation";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt.text;
+        btn.dataset.correct = opt.correct;
+        btn.onclick = function () {
+          const buttons = questionDiv.querySelectorAll("button");
+          buttons.forEach(b => {
+            b.classList.add("disabled");
+            const isCorrect = b.dataset.correct === "true";
+            if (isCorrect) {
+              b.classList.add("correct");
+            }
+          });
+          if (opt.correct === "true" || opt.correct === true) {
+            resultDiv.textContent = "✅ 정답입니다!";
+            resultDiv.style.color = "green";
+          } else {
+            this.classList.add("incorrect");
+            resultDiv.textContent = "❌ 오답입니다.";
+            resultDiv.style.color = "red";
+          }
+          explanationDiv.textContent = opt.explanation;
+        };
+        questionDiv.appendChild(btn);
+      });
+
+      questionDiv.appendChild(resultDiv);
+      questionDiv.appendChild(explanationDiv);
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  generateQuiz();
+</script>
+
+</body>
+</html>
+      
+  
+ 
+    
+
+      
+
+       
